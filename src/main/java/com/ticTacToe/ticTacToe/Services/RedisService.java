@@ -1,23 +1,28 @@
 package com.ticTacToe.ticTacToe.Services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ticTacToe.ticTacToe.Models.GameSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Service
 public class RedisService {
     private final JedisPool jedisPool;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-//    RedisService redisService = new RedisService("localhost", 6379);
-
-    public RedisService(String host, int port) {
+    public RedisService(@Value("${redis.host}") String host, @Value("${redis.port}") int port) {
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        poolConfig.setMaxTotal(5);
         this.jedisPool = new JedisPool(host, port);
+
     }
 
     public void put(String key, GameSession gameSession) {
@@ -28,6 +33,7 @@ public class RedisService {
             e.printStackTrace();
         }
     }
+
     public GameSession getGameSession(String key) {
         try (Jedis jedis = this.jedisPool.getResource()) {
             String json = jedis.get(key);
@@ -54,7 +60,6 @@ public class RedisService {
         }
         return gameSessions;
     }
-
 
     public void close() {
         this.jedisPool.close();
