@@ -60,6 +60,19 @@ public class RedisService {
         }
         return gameSessions;
     }
+    public boolean deleteGameSession(String key) {
+        try (Jedis jedis = this.jedisPool.getResource()) {
+            Long result = jedis.del(key);
+            if (result != null && result > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public void close() {
         this.jedisPool.close();
