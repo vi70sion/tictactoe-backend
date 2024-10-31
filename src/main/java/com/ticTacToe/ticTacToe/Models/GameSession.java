@@ -1,8 +1,6 @@
 package com.ticTacToe.ticTacToe.Models;
 
 public class GameSession {
-
-    // change
     private String sessionId;
     private String player1;
     private String player2;
