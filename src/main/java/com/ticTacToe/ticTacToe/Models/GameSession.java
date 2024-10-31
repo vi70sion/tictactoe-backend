@@ -4,14 +4,14 @@ public class GameSession {
     private String sessionId;
     private String player1;
     private String player2;
-    private char[] boardStatus;
+    private Character[] boardStatus;
     private boolean playerOneMove; // True = player 1 move, False = player 2 move.
 
     public GameSession(String sessionId, String player1, String player2) {
         this.sessionId = sessionId;
         this.player1 = player1;
         this.player2 = player2;
-        this.boardStatus = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+        this.boardStatus = new Character[]{' ',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
         this.playerOneMove = true;
     }
 
@@ -43,11 +43,11 @@ public class GameSession {
         this.player2 = player2;
     }
 
-    public char[] getBoardStatus() {
+    public Character[] getBoardStatus() {
         return boardStatus;
     }
 
-    public void setBoardStatus(char[] boardStatus) {
+    public void setBoardStatus(Character[] boardStatus) {
         this.boardStatus = boardStatus;
     }
 
