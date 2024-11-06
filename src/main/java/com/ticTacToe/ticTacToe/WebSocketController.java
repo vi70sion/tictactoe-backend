@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -28,7 +27,7 @@ public class WebSocketController {
     }
 
     @MessageMapping("/game/{sessionId}")
-    @SendTo("/topic/ticTacToe/{GameSessionId}")
+    @SendTo("/topic/game/{sessionId}")
     public GameSession chatMessage(GameSession gameSession) throws Exception {
 
         if(!startGame(gameSession)){
@@ -37,7 +36,7 @@ public class WebSocketController {
 
         if(isMoveLegal(gameSession)){
             redisService.put(gameSession.getSessionId(), gameSession);
-            //setTurn(gameSession);
+            setTurn(gameSession);
             return gameSession;
         }
 
